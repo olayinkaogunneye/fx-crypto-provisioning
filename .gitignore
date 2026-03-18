@@ -1,0 +1,53 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+venv/
+.envrc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# -----------------------------
+# dbt
+# -----------------------------
+# dbt target directory (compiled models, logs)
+dbt/target/
+dbt/logs/
+
+# dbt profiles (local only, never commit credentials)
+dbt/profiles/
+
+# -----------------------------
+# Fabric / VS Code / Editors
+# -----------------------------
+.vscode/
+*.code-workspace
+
+# -----------------------------
+# OS-generated files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Environment / Credentials
+# -----------------------------
+*.env
+*.json.secret
+*.key
+*.pem
+
+# -----------------------------
+# Temporary files
+# -----------------------------
+*.tmp
+*.log
+*.bak
+*.swp
