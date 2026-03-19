@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: dim_instrument
+    description: >
+      Unified dimension containing all tradable instruments across FX and Crypto.
+      Provides a single surrogate key space for cross-asset analytics.
+    columns:
+      - name: instrument_key
+        description: "Surrogate key uniquely identifying each instrument."
+        tests:
+          - unique
+          - not_null
+
+      - name: instrument_type
+        description: "Type of instrument (FX or CRYPTO)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['FX', 'CRYPTO']
+
+      - name: instrument_name
+        description: "Natural key for the instrument (currency pair or crypto symbol)."
+        tests:
+          - not_null
+
+      - name: base_currency
+        description: "Base currency for FX instruments; null for crypto."
+
+      - name: quote_currency
+        description: "Quote currency for FX instruments; null for crypto."
+
+      - name: category
+        description: "Category for crypto assets (e.g., 'crypto'); null for FX."

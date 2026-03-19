@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fact_market_snapshot
+    description: >
+      Unified cross-asset snapshot combining FX and Crypto instruments into a single
+      analytics-ready fact table using the dim_instrument surrogate key.
+    columns:
+      - name: instrument_key
+        description: "Foreign key to dim_instrument."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_instrument')
+              field: instrument_key
+
+      - name: date
+        description: "Date of the market snapshot."
+        tests:
+          - not_null
+
+      - name: instrument_name
+        description: "Human-readable name of the instrument."
+
+      - name: instrument_type
+        description: "Instrument type (FX or CRYPTO)."
+        tests:
+          - accepted_values:
+              values: ['FX', 'CRYPTO']
+
+      - name: price
+        description: "Daily price or FX rate."
+
+      - name: daily_return
+        description: "Daily percentage return."
+
+      - name: price_7d_avg
+        description: "7-day rolling average."
+
+      - name: price_30d_avg
+        description: "30-day rolling average."
+
+      - name: price_7d_volatility
+        description: "7-day rolling volatility."
+
+      - name: price_30d_volatility
+        description: "30-day rolling volatility."
+
+      - name: base_currency
+        description: "Base currency for FX; null for crypto."
+
+      - name: quote_currency
+        description: "Quote currency for FX; null for crypto."
+
+      - name: source
+        description: "Data source."
+
+      - name: ingestion_timestamp
+        description: "Timestamp when the record was ingested."

@@ -77,7 +77,7 @@ with_dim as (
 -- Final FX fact table
 select
     date,
-    currency_key,
+    currency_key as instrument_key,
     currency_pair,
     rate,
     round(daily_return, 6) as daily_return,

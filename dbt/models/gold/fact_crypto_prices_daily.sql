@@ -77,7 +77,7 @@ with_dim as (
 -- Final crypto fact table
 select
     date,
-    asset_key,
+    asset_key + (select max(currency_key) from {{ ref('dim_currency') }}) as instrument_key,
     symbol,
     price,
     round(daily_return, 6) as daily_return,
