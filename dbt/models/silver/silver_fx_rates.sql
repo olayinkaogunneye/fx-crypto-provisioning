@@ -6,7 +6,7 @@ with cleaned as (
         source,
         ingestion_timestamp,
         source_file_name
-    from {{ ref('bronze_fx_rates_raw') }}
+    from {{ ref('bronze_fx_prices_raw') }}
     where rate is not null
 ),
 
