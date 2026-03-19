@@ -1,11 +1,17 @@
+{{ config(materialized='table') }}
+
+-- Base FX rates from Silver layer
 with base as (
     select
         date,
         currency_pair,
+        source,
+        ingestion_timestamp,
         rate
     from {{ ref('silver_fx_rates') }}
 ),
 
+-- Compute previous day's rate for return calculation
 returns as (
     select
         *,
@@ -16,10 +22,13 @@ returns as (
     from base
 ),
 
+-- Calculate daily returns
 with_returns as (
     select
         date,
         currency_pair,
+        source,
+        ingestion_timestamp,
         rate,
         case 
             when prev_rate is null then null
@@ -28,6 +37,7 @@ with_returns as (
     from returns
 ),
 
+-- Compute rolling averages and rolling volatility
 rolling as (
     select
         *,
@@ -52,15 +62,29 @@ rolling as (
             rows between 29 preceding and current row
         ) as rate_30d_volatility
     from with_returns
+),
+
+-- Attach surrogate key from dim_currency
+with_dim as (
+    select
+        r.*,
+        c.currency_key
+    from rolling r
+    left join {{ ref('dim_currency') }} c
+        on r.currency_pair = c.currency_pair
 )
 
+-- Final FX fact table
 select
     date,
+    currency_key as instrument_key,
     currency_pair,
     rate,
     round(daily_return, 6) as daily_return,
     round(rate_7d_avg, 6) as rate_7d_avg,
     round(rate_30d_avg, 6) as rate_30d_avg,
     round(rate_7d_volatility, 6) as rate_7d_volatility,
-    round(rate_30d_volatility, 6) as rate_30d_volatility
-from rolling
+    round(rate_30d_volatility, 6) as rate_30d_volatility,
+    source,
+    ingestion_timestamp
+from with_dim

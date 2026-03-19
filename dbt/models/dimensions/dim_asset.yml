@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: dim_asset
+    description: >
+      Dimension table containing all unique crypto assets extracted from the
+      silver_crypto_prices dataset. Each asset is assigned a surrogate key
+      (asset_key) and includes basic metadata such as symbol and category.
+    columns:
+      - name: asset_key
+        description: "Surrogate key uniquely identifying each crypto asset."
+        tests:
+          - unique
+          - not_null
+
+      - name: asset_symbol
+        description: "Natural key representing the crypto asset symbol."
+        tests:
+          - not_null
+
+      - name: asset_name
+        description: "Human-readable name for the crypto asset (same as symbol)."
+
+      - name: category
+        description: "Asset category (e.g., 'crypto')."
+        tests:
+          - not_null

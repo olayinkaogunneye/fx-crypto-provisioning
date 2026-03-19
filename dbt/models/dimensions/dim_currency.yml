@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_currency
+    description: >
+      Dimension table containing all FX currency pairs extracted from the
+      silver_fx_rates dataset. Includes surrogate keys, base currency, and
+      quote currency metadata.
+    columns:
+      - name: currency_key
+        description: "Surrogate key uniquely identifying each FX currency pair."
+        tests:
+          - unique
+          - not_null
+
+      - name: currency_pair
+        description: "Natural key representing the FX pair (e.g., GBPUSD)."
+        tests:
+          - not_null
+
+      - name: base_currency
+        description: "The base currency extracted from the FX pair."
+        tests:
+          - not_null
+
+      - name: quote_currency
+        description: "The quote currency extracted from the FX pair."
+        tests:
+          - not_null

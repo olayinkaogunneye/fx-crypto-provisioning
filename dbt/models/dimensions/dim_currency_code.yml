@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dim_currency_code
+    description: >
+      Dimension table containing all unique currency codes derived from FX
+      base and quote currencies. Includes placeholder metadata fields for
+      future enrichment.
+    columns:
+      - name: currency_code_key
+        description: "Surrogate key uniquely identifying each currency code."
+        tests:
+          - unique
+          - not_null
+
+      - name: currency_code
+        description: "ISO currency code (e.g., USD, GBP, JPY)."
+        tests:
+          - not_null
+
+      - name: currency_name
+        description: "Human-readable currency name (placeholder)."
+
+      - name: region
+        description: "Geographic region associated with the currency (placeholder)."
+
+      - name: iso_number
+        description: "ISO numeric currency code (placeholder)."

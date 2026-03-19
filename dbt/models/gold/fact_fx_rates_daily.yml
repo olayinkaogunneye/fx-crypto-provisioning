@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: fact_fx_rates_daily
+    description: >
+      Fact table containing daily FX rates with rolling averages, volatility,
+      and unified instrument_key for joining to dim_instrument.
+    columns:
+      - name: instrument_key
+        description: "Foreign key to dim_instrument."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_instrument')
+              field: instrument_key
+
+      - name: date
+        description: "Date of the FX rate."
+        tests:
+          - not_null
+
+      - name: currency_pair
+        description: "FX currency pair (e.g., GBPUSD)."
+
+      - name: rate
+        description: "Daily FX rate."
+        tests:
+          - not_null
+
+      - name: daily_return
+        description: "Daily percentage return."
+
+      - name: rate_7d_avg
+        description: "7-day rolling average of FX rate."
+
+      - name: rate_30d_avg
+        description: "30-day rolling average of FX rate."
+
+      - name: rate_7d_volatility
+        description: "7-day rolling volatility."
+
+      - name: rate_30d_volatility
+        description: "30-day rolling volatility."
+
+      - name: source
+        description: "Data source (e.g., FRED)."
+
+      - name: ingestion_timestamp
+        description: "Timestamp when the record was ingested."

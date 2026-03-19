@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: fact_crypto_prices_daily
+    description: >
+      Fact table containing daily crypto prices with rolling averages, volatility,
+      and unified instrument_key for joining to dim_instrument.
+    columns:
+      - name: instrument_key
+        description: "Foreign key to dim_instrument."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_instrument')
+              field: instrument_key
+
+      - name: date
+        description: "Date of the crypto price."
+        tests:
+          - not_null
+
+      - name: symbol
+        description: "Crypto asset symbol (e.g., bitcoin, ethereum)."
+
+      - name: price
+        description: "Daily crypto price."
+        tests:
+          - not_null
+
+      - name: daily_return
+        description: "Daily percentage return."
+
+      - name: price_7d_avg
+        description: "7-day rolling average of price."
+
+      - name: price_30d_avg
+        description: "30-day rolling average of price."
+
+      - name: price_7d_volatility
+        description: "7-day rolling volatility."
+
+      - name: price_30d_volatility
+        description: "30-day rolling volatility."
+
+      - name: source
+        description: "Data source (e.g., CoinGecko)."
+
+      - name: ingestion_timestamp
+        description: "Timestamp when the record was ingested."
