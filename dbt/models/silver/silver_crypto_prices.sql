@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental',
+    unique_key=['date', 'symbol']
+) }}
+
 with cleaned as (
     select
         date,
@@ -27,3 +32,7 @@ select
     ingestion_timestamp
 from deduped
 where rn = 1
+
+{% if is_incremental() %}
+  and ingestion_timestamp > (select max(ingestion_timestamp) from {{ this }})
+{% endif %}

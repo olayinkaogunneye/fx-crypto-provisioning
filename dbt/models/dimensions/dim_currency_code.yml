@@ -7,7 +7,7 @@ models:
       base and quote currencies. Includes placeholder metadata fields for
       future enrichment.
     columns:
-      - name: currency_code_key
+      - name: currency_key
         description: "Surrogate key uniquely identifying each currency code."
         tests:
           - unique
