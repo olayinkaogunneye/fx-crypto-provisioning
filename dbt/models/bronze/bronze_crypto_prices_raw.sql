@@ -1,3 +1,5 @@
+{{ config(materialized='view') }}
+
 select
     cast(ingestion_ts as date) as date,
     cast(price_usd as float) as price,

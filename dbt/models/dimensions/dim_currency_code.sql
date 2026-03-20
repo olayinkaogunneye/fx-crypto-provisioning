@@ -12,7 +12,7 @@ with all_currencies as (
 -- Add metadata (optional, can be expanded later)
 final as (
     select
-        row_number() over (order by currency_code) as currency_code_key,
+        row_number() over (order by currency_code) as currency_key,
         currency_code,
         currency_code as currency_name,   -- placeholder
         null as region,                   -- placeholder

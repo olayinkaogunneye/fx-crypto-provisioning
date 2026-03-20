@@ -1,4 +1,7 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key=['date', 'instrument_key']
+) }}
 
 -- Base crypto prices from Silver layer
 with base as (
@@ -88,3 +91,7 @@ select
     source,
     ingestion_timestamp
 from with_dim
+
+{% if is_incremental() %}
+  where ingestion_timestamp > (select max(ingestion_timestamp) from {{ this }})
+{% endif %}

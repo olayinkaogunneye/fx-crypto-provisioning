@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental',
+    unique_key=['date', 'currency_pair']
+) }}
+
 with cleaned as (
     select
         date,
@@ -29,3 +34,7 @@ select
     source_file_name
 from deduped
 where rn = 1
+
+{% if is_incremental() %}
+  and ingestion_timestamp > (select max(ingestion_timestamp) from {{ this }})
+{% endif %}

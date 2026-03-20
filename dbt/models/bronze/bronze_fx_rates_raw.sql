@@ -1,3 +1,5 @@
+{{ config(materialized='view') }}
+
 select
     cast(date as date) as date,
     cast(rate as float) as rate,
