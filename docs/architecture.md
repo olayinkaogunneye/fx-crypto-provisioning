@@ -91,7 +91,8 @@ The Gold layer contains **final business-ready tables** used by analysts, dashbo
 
 Includes:
 - `dim_currency` — reference table for FX currencies  
-- `dim_asset` — reference table for crypto assets  
+- `dim_asset` — reference table for crypto assets
+- `dim_asset` - reference table for crypto + FX  
 - `fact_market_snapshot` — combined FX + crypto snapshot  
 
 Purpose:

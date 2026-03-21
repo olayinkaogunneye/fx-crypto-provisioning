@@ -153,7 +153,8 @@ The modelling layer transforms raw FX and crypto data into clean, reliable, and 
 
 This approach ensures the pipeline is:
 - Scalable  
-- Maintainable  
+- Maintainable
+- auditable  
 - Easy to understand  
 - Suitable for real-world data provisioning workflows  
 
